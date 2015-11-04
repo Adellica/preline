@@ -93,8 +93,8 @@
 
 (define-values
   (pipes exit-status)
-  (let loop ((pipes `((,cout "" "> ")
-                      (,cerr "" "! "))))
+  (let loop ((pipes `((,cerr "" "! ")
+                      (,cout "" "> "))))
     (let ((fds (file-select (map pipe-fd pipes) #f)))
       (let ((pipes (map (lambda (pipe)
                           (if (member (pipe-fd pipe) fds)
