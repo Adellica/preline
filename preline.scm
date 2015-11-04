@@ -37,6 +37,15 @@
 (define prefix (make-parameter " "))
 (define time-format (make-parameter "%FT%T")) ;; TODO: <-- argv
 
+(cond ((= 0 (length (command-line-arguments)))
+       (print "usage: " (car (argv)) " [+prefix] <command>")
+       (exit -1)))
+
+(let ((option (car (command-line-arguments))))
+  (cond ((string-prefix? "+" option)
+         (time-format (substring option 1))
+         (command-line-arguments (cdr (command-line-arguments))))))
+
 (define (fd-read fd)
   (let* ((read (file-read fd 1024))
          (buffer (car read))
