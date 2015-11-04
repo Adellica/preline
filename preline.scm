@@ -92,7 +92,7 @@
   (##sys#file-nonblocking! cerr))
 
 (define-values
-  (pipes exit-status)
+  (pipes exit-status normal?)
   (let loop ((pipes `((,cerr "" "! ")
                       (,cout "" "> "))))
     (let ((fds (file-select (map pipe-fd pipes) #f)))
@@ -101,11 +101,11 @@
                               (process-pipe pipe)
                               pipe))
                         pipes)))
-        (let-values ( ( (pid reason exit-status)
+        (let-values ( ( (pid normal? exit-status)
                         (process-wait pid #t)))
           (if (= 0 pid) ;; still running
               (loop pipes)
-              (values pipes exit-status)))))))
+              (values pipes exit-status normal?)))))))
 
 (define (pipe-add-newline pipe)
   (list (pipe-fd pipe)
@@ -124,4 +124,8 @@
 ;; close all pipes
 (for-each file-close (map pipe-fd pipes))
 
-(fmt-line (number->string exit-status) "exit ")
+(fmt-line (number->string exit-status)
+          (conc "exit "
+                (if normal?
+                    "normal "
+                    "signal ")))
