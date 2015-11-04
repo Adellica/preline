@@ -1,0 +1,4 @@
+;; -*- scheme -*-
+(compile preline.scm)
+(install-program 'preline '("preline"))
+
