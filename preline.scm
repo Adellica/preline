@@ -80,7 +80,7 @@
                         (pipe-tag pipe))
         (pipe-tag pipe)))
 
-(fmt-line "starting")
+(fmt-line "start")
 
 (begin
 
@@ -124,4 +124,4 @@
 ;; close all pipes
 (for-each file-close (map pipe-fd pipes))
 
-(fmt-line (number->string exit-status) "exited ")
+(fmt-line (number->string exit-status) "exit ")
