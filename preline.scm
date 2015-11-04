@@ -34,7 +34,7 @@
     (values pid out-in err-in)))
 
 
-(define prefix (make-parameter " abc 123 "))
+(define prefix (make-parameter " "))
 (define time-format (make-parameter "%FT%T")) ;; TODO: <-- argv
 
 (define (fd-read fd)
